@@ -1,466 +1,425 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Type of Life</title>
-<style>
-/* --- ESTILOS BASE --- */
-@font-face {
-  font-family: "TipografaViva";
-  src: url("Tipografía final-VF.ttf") format("truetype");
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Type of Life</title>
+    <style>
+        @font-face {
+            font-family: "TipografaViva";
+            src: url("Tipografía final-VF.ttf") format("truetype");
+        }
+        
+        :root {
+            --bg-color: #f0f2f5;
+            --surface-color: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #666;
+            --accent: #2563eb;
+            --border: #e5e7eb;
+        }
 
-:root {
-  --bg-color: #f5f5f5;
-  --surface-color: #ffffff;
-  --text-main: #1a1a1a;
-  --text-muted: #666;
-  --accent: #2c3e50;
-  --border: #e0e0e0;
-}
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: var(--text-main);
+            line-height: 1.6;
+        }
 
-body {
-  font-family: system-ui, -apple-system, sans-serif;
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 450px 1fr;
-  background-color: var(--bg-color);
-  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-  background-size: 24px 24px;
-  color: var(--text-main);
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
 
-/* --- PANEL TIPO "WIZARD" --- */
-.panel-container {
-  background: var(--surface-color);
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 10px 0 30px rgba(0,0,0,0.05);
-  border-right: 1px solid var(--border);
-  position: relative;
-  z-index: 10;
-}
+        /* HERO SECTION */
+        header {
+            text-align: center;
+            margin-bottom: 6rem;
+            position: relative;
+        }
 
-.progress-bar-container {
-  width: 100%;
-  height: 6px;
-  background: #f0f0f0;
-  flex-shrink: 0;
-}
-.progress-bar {
-  height: 100%;
-  background: var(--accent);
-  width: 25%;
-  transition: width 0.4s ease;
-}
+        .hero-label {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: block;
+        }
 
-.wizard-content {
-  flex: 1;
-  padding: 2rem 2.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; 
-  overflow-y: auto;
-  overflow-x: hidden;
-}
+        h1 {
+            font-family: "TipografaViva", system-ui, sans-serif;
+            font-size: clamp(4rem, 12vw, 8rem);
+            margin: 0;
+            line-height: 0.9;
+            color: var(--text-main);
+            text-transform: uppercase;
+            cursor: default;
+        }
 
-.step-header { margin-bottom: 1.5rem; flex-shrink: 0; }
-.step-counter {
-  font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
-  color: var(--text-muted); font-weight: bold; display: block; margin-bottom: 0.25rem;
-}
-.step-title { font-size: 1.5rem; margin: 0; color: var(--text-main); }
-.step-desc { color: var(--text-muted); margin-top: 0.25rem; font-size: 0.9rem; line-height: 1.3; }
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 2rem auto;
+            font-weight: 300;
+        }
 
-.step { display: none; animation: fadeIn 0.4s ease; padding-bottom: 1rem; }
-.step.active { display: block; }
+        /* BUTTONS */
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            background: var(--text-main);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.5px;
+        }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+        .cta-button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
+        }
 
-.input-group { margin-bottom: 1.2rem; }
-label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-main); }
+        /* GRID LAYOUT */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
 
-input[type="text"], select {
-  width: 100%; padding: 0.8rem; font-size: 1rem;
-  border: 1px solid #ccc; border-radius: 0.6rem;
-  background: #f9f9f9; transition: all 0.2s; box-sizing: border-box;
-}
-input[type="text"]:focus, select:focus {
-  border-color: var(--accent); background: white; outline: none;
-}
+        .description-card {
+            background: var(--surface-color);
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
 
-.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-.option-card { position: relative; cursor: pointer; }
-.option-card input { position: absolute; opacity: 0; width: 0; height: 0; }
-.card-content {
-  display: flex; align-items: center; justify-content: center;
-  padding: 0.6rem 0.2rem; background: #fff;
-  border: 1px solid #ddd; border-radius: 0.6rem;
-  text-align: center; font-size: 0.85rem; color: #555;
-  transition: all 0.2s; min-height: 40px;
-}
-.option-card:hover .card-content { border-color: #999; background: #fafafa; }
-.option-card input:checked + .card-content {
-  background: var(--accent); color: white;
-  border-color: var(--accent); font-weight: 600;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+        h2 {
+            font-size: 2rem;
+            margin-top: 0;
+            letter-spacing: -0.5px;
+        }
 
-.wizard-nav {
-  padding: 1.5rem 2.5rem; border-top: 1px solid var(--border);
-  display: flex; justify-content: space-between; align-items: center;
-  background: var(--surface-color); flex-shrink: 0; z-index: 20;
-}
+        /* FEATURES MINIMALISTAS */
+        .features-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
 
-.btn {
-  padding: 0.8rem 1.8rem; border-radius: 50px; font-weight: 600;
-  cursor: pointer; transition: all 0.3s; border: none; font-size: 0.95rem;
-}
-.btn-prev { background: transparent; color: var(--text-muted); }
-.btn-prev:hover { color: var(--text-main); background: #f0f0f0; }
-.btn-prev:disabled { opacity: 0.3; cursor: not-allowed; }
-.btn-next { background: var(--accent); color: white; }
-.btn-next:hover { background: #1a252f; transform: translateY(-1px); }
+        .feature-item {
+            border-top: 2px solid var(--text-main);
+            padding-top: 1rem;
+        }
 
-/* --- PREVIEW AREA --- */
-.preview-area {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  overflow: hidden;
-}
+        .feature-item h3 {
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
 
-.preview-card {
-  font-family: "TipografaViva", system-ui, sans-serif;
-  font-size: clamp(2.5rem, 7vw, 8rem); 
-  line-height: 1;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  padding: 0;
-  text-align: center;
-  width: 100%;
-  max-width: 900px;
-}
+        .video-container {
+            width: 100%;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #e2e8f0;
+            aspect-ratio: 16/9;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-family: monospace;
+        }
 
-/* --- GLITCH CSS (Restaurado al original funcional) --- */
-.glitch-wrapper {
-  position: relative;
-  display: inline-block;
-}
-.glitch-wrapper.active {
-  animation: glitch-skew 0.5s infinite;
-}
+        footer {
+            text-align: center;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            margin-top: 4rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
 
-/* Keyframes originales */
-@keyframes glitch-skew {
-  0% { transform: skewX(0deg); }
-  10% { transform: skewX(-2deg); }
-  20% { transform: skewX(2deg); }
-  30% { transform: skewX(-1deg); }
-  40% { transform: skewX(1deg); }
-  50% { transform: skewX(0deg); }
-  60% { transform: skewX(-1deg); }
-  70% { transform: skewX(1deg); }
-  80% { transform: skewX(-0.5deg); }
-  90% { transform: skewX(0.5deg); }
-  100% { transform: skewX(0deg); }
-}
+        /* --- GLITCH CSS --- */
+        .glitch-wrapper { position: relative; display: inline-block; }
+        .glitch-wrapper.active { animation: glitch-skew 0.5s infinite; }
+        @keyframes glitch-skew {
+            0% { transform: skewX(0deg); } 20% { transform: skewX(2deg); } 40% { transform: skewX(-2deg); } 60% { transform: skewX(1deg); } 80% { transform: skewX(-1deg); } 100% { transform: skewX(0deg); }
+        }
+        .glitch-wrapper::before, .glitch-wrapper::after {
+            content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); 
+            clip-path: polygon(0 0, 0 0, 0 0);
+        }
+        
+        .glitch-level-1::before { clip-path: polygon(0 0,100% 0,100% 35%,0 35%,0 40%,100% 40%,100% 100%,0 100%); animation: glitch-1-before 0.4s infinite; }
+        .glitch-level-1::after { clip-path: polygon(0 0,100% 0,100% 60%,0 60%,0 65%,100% 65%,100% 100%,0 100%); animation: glitch-1-after 0.35s infinite; }
+        .glitch-level-2::before { clip-path: polygon(0 0,100% 0,100% 25%,0 25%,0 30%,100% 30%,100% 55%,0 55%,0 60%,100% 60%,100% 100%,0 100%); animation: glitch-2-before 0.3s infinite; }
+        .glitch-level-2::after { clip-path: polygon(0 0,100% 0,100% 40%,0 40%,0 45%,100% 45%,100% 70%,0 70%,0 75%,100% 75%,100% 100%,0 100%); animation: glitch-2-after 0.25s infinite; }
+        .glitch-level-3::before { clip-path: polygon(0 0,100% 0,100% 15%,0 15%,0 20%,100% 20%,100% 35%,0 35%,0 40%,100% 40%,100% 55%,0 55%,0 60%,100% 60%,100% 75%,0 75%,0 80%,100% 80%,100% 100%,0 100%); animation: glitch-3-before 0.2s infinite; }
+        .glitch-level-3::after { clip-path: polygon(0 0,100% 0,100% 25%,0 25%,0 30%,100% 30%,100% 45%,0 45%,0 50%,100% 50%,100% 65%,0 65%,0 70%,100% 70%,100% 85%,0 85%,0 90%,100% 90%,100% 100%,0 100%); animation: glitch-3-after 0.15s infinite; }
+        
+        @keyframes glitch-1-before { 0%{transform:translate(0,0);} 20%{transform:translate(-2px,-1px);} 40%{transform:translate(2px,1px);} 60%{transform:translate(-1px,1px);} 80%{transform:translate(1px,-1px);} 100%{transform:translate(0,0);} }
+        @keyframes glitch-1-after { 0%{transform:translate(0,0);} 20%{transform:translate(2px,1px);} 40%{transform:translate(-2px,-1px);} 60%{transform:translate(1px,-1px);} 80%{transform:translate(-1px,1px);} 100%{transform:translate(0,0);} }
+        @keyframes glitch-2-before { 0%{transform:translate(0,0);} 20%{transform:translate(-4px,-2px);} 40%{transform:translate(4px,2px);} 100%{transform:translate(0,0);} }
+        @keyframes glitch-2-after { 0%{transform:translate(0,0);} 20%{transform:translate(4px,2px);} 40%{transform:translate(-4px,-2px);} 100%{transform:translate(0,0);} }
+        @keyframes glitch-3-before { 0%{transform:translate(0,0);} 10%{transform:translate(-6px,-4px);} 50%{transform:translate(5px,2px);} 100%{transform:translate(0,0);} }
+        @keyframes glitch-3-after { 0%{transform:translate(0,0);} 10%{transform:translate(6px,4px);} 50%{transform:translate(-5px,2px);} 100%{transform:translate(0,0);} }
 
-.glitch-wrapper::before,
-.glitch-wrapper::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* IMPORTANTE: Color de fondo igual al body para que el recorte funcione */
-  background: var(--bg-color); 
-}
+        @media (max-width: 900px) {
+            .content-grid { grid-template-columns: 1fr; }
+            .features-row { grid-template-columns: 1fr; gap: 1rem; }
+        }
 
-/* Polígonos de recorte originales */
-.glitch-level-1::before { clip-path: polygon(0 0,100% 0,100% 35%,0 35%,0 40%,100% 40%,100% 100%,0 100%); animation: glitch-1-before 0.4s infinite; }
-.glitch-level-1::after { clip-path: polygon(0 0,100% 0,100% 60%,0 60%,0 65%,100% 65%,100% 100%,0 100%); animation: glitch-1-after 0.35s infinite; }
-@keyframes glitch-1-before { 0%{transform:translate(0,0);} 20%{transform:translate(-3px,-2px);} 40%{transform:translate(3px,2px);} 60%{transform:translate(-2px,1px);} 80%{transform:translate(2px,-1px);} 100%{transform:translate(0,0);} }
-@keyframes glitch-1-after { 0%{transform:translate(0,0);} 20%{transform:translate(3px,2px);} 40%{transform:translate(-3px,-2px);} 60%{transform:translate(2px,-1px);} 80%{transform:translate(-2px,1px);} 100%{transform:translate(0,0);} }
+        /* --- ESTILOS PARA EL MAPA DE CARACTERES Y CONTROLES --- */
+        .glyph-section {
+            margin: 6rem 0;
+            text-align: left;
+        }
 
-.glitch-level-2::before { clip-path: polygon(0 0,100% 0,100% 25%,0 25%,0 30%,100% 30%,100% 55%,0 55%,0 60%,100% 60%,100% 100%,0 100%); animation: glitch-2-before 0.3s infinite; }
-.glitch-level-2::after { clip-path: polygon(0 0,100% 0,100% 40%,0 40%,0 45%,100% 45%,100% 70%,0 70%,0 75%,100% 75%,100% 100%,0 100%); animation: glitch-2-after 0.25s infinite; }
-@keyframes glitch-2-before { 0%{transform:translate(0,0);} 15%{transform:translate(-5px,-3px);} 30%{transform:translate(5px,3px);} 45%{transform:translate(-4px,2px);} 60%{transform:translate(4px,-2px);} 75%{transform:translate(-3px,1px);} 90%{transform:translate(3px,-1px);} 100%{transform:translate(0,0);} }
-@keyframes glitch-2-after { 0%{transform:translate(0,0);} 15%{transform:translate(5px,3px);} 30%{transform:translate(-5px,-3px);} 45%{transform:translate(4px,-2px);} 60%{transform:translate(-4px,2px);} 75%{transform:translate(3px,-1px);} 90%{transform:translate(-3px,1px);} 100%{transform:translate(0,0);} }
+        /* Nuevos estilos para los controles */
+        .glyph-controls {
+            background: var(--surface-color);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
 
-.glitch-level-3::before { clip-path: polygon(0 0,100% 0,100% 15%,0 15%,0 20%,100% 20%,100% 35%,0 35%,0 40%,100% 40%,100% 55%,0 55%,0 60%,100% 60%,100% 75%,0 75%,0 80%,100% 80%,100% 100%,0 100%); animation: glitch-3-before 0.2s infinite; }
-.glitch-level-3::after { clip-path: polygon(0 0,100% 0,100% 25%,0 25%,0 30%,100% 30%,100% 45%,0 45%,0 50%,100% 50%,100% 65%,0 65%,0 70%,100% 70%,100% 85%,0 85%,0 90%,100% 90%,100% 100%,0 100%); animation: glitch-3-after 0.15s infinite; }
-@keyframes glitch-3-before { 0%{transform:translate(0,0);} 10%{transform:translate(-7px,-4px);} 20%{transform:translate(7px,4px);} 30%{transform:translate(-6px,3px);} 40%{transform:translate(6px,-3px);} 50%{transform:translate(-5px,2px);} 60%{transform:translate(5px,-2px);} 70%{transform:translate(-4px,1px);} 80%{transform:translate(4px,-1px);} 90%{transform:translate(-3px,2px);} 100%{transform:translate(0,0);} }
-@keyframes glitch-3-after { 0%{transform:translate(0,0);} 10%{transform:translate(7px,4px);} 20%{transform:translate(-7px,-4px);} 30%{transform:translate(6px,-3px);} 40%{transform:translate(-6px,3px);} 50%{transform:translate(5px,-2px);} 60%{transform:translate(-5px,2px);} 70%{transform:translate(4px,-1px);} 80%{transform:translate(-4px,1px);} 90%{transform:translate(3px,-2px);} 100%{transform:translate(0,0);} }
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
 
-@media (max-width: 900px) {
-    body { grid-template-columns: 1fr; overflow: auto; display: block; height: auto; }
-    .panel-container { height: auto; min-height: 80vh; border-right: none; }
-    .wizard-content { max-height: 60vh; }
-    .preview-area { padding: 2rem; min-height: 50vh; }
-}
-</style>
+        .control-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--text-main);
+            cursor: pointer;
+            transition: background .15s ease-in-out;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            background: var(--accent);
+        }
+
+        .glyph-container {
+            background: var(--surface-color);
+            border-radius: 1rem;
+            padding: 3rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .glyph-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 1.5rem;
+            margin-top: 0;
+        }
+
+        .glyph-item {
+            font-family: "TipografaViva", system-ui, sans-serif;
+            font-size: 3.5rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            transition: transform 0.2s ease, background 0.2s ease; /* Quitamos transition font-settings para que sea instantáneo al deslizar */
+            cursor: default;
+        }
+
+        .glyph-item:hover {
+            background: #f0f2f5;
+            transform: scale(1.1);
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .glyph-controls { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <header>
+            <span class="hero-label">Tipografía experimental</span>
+            <h1 class="glitch-wrapper" id="headerGlitch" data-text="TYPE OF LIFE">TYPE OF LIFE</h1>
+            <p class="subtitle">Tipografía interactiva cuya pretensión es hacer reflexionar al usuario sobre el impacto de sus habitos y entorno en su salud física y mental.</p>
+            <a href="app.html" class="cta-button">Iniciar Simulación</a>
+        </header>
 
-<div class="panel-container">
-  <div class="progress-bar-container">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
+        <div class="content-grid">
+            <div class="video-container">
+                <div class="video-placeholder">Preview Video 1920x1080</div>
+            </div>
+            <div class="description-card">
+                <h2>Diseño Reactivo</h2>
+                <p>Este proyecto explora la intersección entre el diseño tipográfico y la biología humana. A través de un sistema de ejes variables, la tipografía "enferma" y se "degrada" en tiempo real basándose en inputs del usuario.</p>
+                
+                <div class="features-row">
+                    <div class="feature-item">
+                        <h3>SICKNESS</h3>
+                        <p>Factores ambientales deforman la estructura.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>DECAY</h3>
+                        <p>Los malos hábitos rompen la letra desde dentro</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>STRESS</h3>
+                        <p>Fracturas animadas que representan la agitación y ansiedad</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  <div class="wizard-content">
-    
-    <div class="step active" id="step1">
-      <div class="step-header">
-        <span class="step-counter">Fase 01 / 04</span>
-        <h2 class="step-title">Identidad del Sujeto</h2>
-        <p class="step-desc">Escribe tu nombre para comenzar con la simulación.</p>
-      </div>
-      <div class="input-group">
-        <label>Nombre</label>
-        <input type="text" id="nameInput" placeholder="Escribe aquí..." autocomplete="off">
-      </div>
+        <div class="glyph-section">
+            <h2>Mapa de Caracteres Interactivo</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-muted);">Ajusta los deslizadores para visualizar el comportamiento de la fuente variable en todo el set.</p>
+            
+            <div class="glyph-controls">
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Axis: SICKNESS</span>
+                        <span id="sickValue">0.00</span>
+                    </div>
+                    <input type="range" id="sickRange" min="0" max="1" step="0.01" value="0">
+                </div>
+                <div class="control-group">
+                    <div class="control-label">
+                        <span>Axis: DECAY</span>
+                        <span id="degnValue">0</span>
+                    </div>
+                    <input type="range" id="degnRange" min="0" max="1000" step="10" value="0">
+                </div>
+            </div>
+
+            <div class="glyph-container">
+                <div class="glyph-grid" id="glyphGrid">
+                    <div class="glyph-item">A</div><div class="glyph-item">B</div><div class="glyph-item">C</div>
+                    <div class="glyph-item">D</div><div class="glyph-item">E</div><div class="glyph-item">F</div>
+                    <div class="glyph-item">G</div><div class="glyph-item">H</div><div class="glyph-item">I</div>
+                    <div class="glyph-item">J</div><div class="glyph-item">K</div><div class="glyph-item">L</div>
+                    <div class="glyph-item">M</div><div class="glyph-item">N</div><div class="glyph-item">Ñ</div>
+                    <div class="glyph-item">O</div><div class="glyph-item">P</div><div class="glyph-item">Q</div>
+                    <div class="glyph-item">R</div><div class="glyph-item">S</div><div class="glyph-item">T</div>
+                    <div class="glyph-item">U</div><div class="glyph-item">V</div><div class="glyph-item">W</div>
+                    <div class="glyph-item">X</div><div class="glyph-item">Y</div><div class="glyph-item">Z</div>
+                    <div class="glyph-item">Á</div><div class="glyph-item">É</div><div class="glyph-item">Í</div>
+                    <div class="glyph-item">Ó</div><div class="glyph-item">Ú</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Proyecto desarrollado como parte de la asignatura Tipografía Experimental - ESD Cuarto Gráfico</p>
+        </footer>
     </div>
 
-    <div class="step" id="step2">
-      <div class="step-header">
-        <span class="step-counter">Fase 02 / 04</span>
-        <h2 class="step-title">Hábitos Físicos</h2>
-        <p class="step-desc">Existen hábitos que afectan objetivamente a la salud desde nuestras propias acciones.</p>
-      </div>
-      
-      <div class="input-group">
-        <label>Nivel de Actividad</label>
-        <div class="options-grid">
-          <label class="option-card"><input type="radio" name="exercise" value="0" checked><span class="card-content">Atleta</span></label>
-          <label class="option-card"><input type="radio" name="exercise" value="100"><span class="card-content">Moderado</span></label>
-          <label class="option-card"><input type="radio" name="exercise" value="200"><span class="card-content">Sedentario</span></label>
-          <label class="option-card"><input type="radio" name="exercise" value="300"><span class="card-content">Inactivo</span></label>
-        </div>
-      </div>
+    <script>
+        // Animación del Header (Misma lógica anterior)
+        const headerGlitch = document.getElementById('headerGlitch');
+        const demoStates = [
+            { sick: 0, degn: 0, mental: 0 },
+            { sick: 1, degn: 0, mental: 0 }, 
+            { sick: 0, degn: 1000, mental: 0 },
+            { sick: 0, degn: 0, mental: 3 },
+            { sick: 0.5, degn: 200, mental: 5 },
+            { sick: 1, degn: 1000, mental: 10 }
+        ];
+        let currentIndex = 0;
 
-      <div class="input-group">
-        <label>Calidad del Sueño</label>
-        <div class="options-grid">
-            <label class="option-card"><input type="radio" name="sleep" value="0" checked><span class="card-content">8+ Horas</span></label>
-            <label class="option-card"><input type="radio" name="sleep" value="50"><span class="card-content">6-7 h</span></label>
-            <label class="option-card"><input type="radio" name="sleep" value="100"><span class="card-content">5 h</span></label>
-            <label class="option-card"><input type="radio" name="sleep" value="200"><span class="card-content">Insomnio</span></label>
-        </div>
-      </div>
+        function updateHeaderAnimation() {
+            const state = demoStates[currentIndex];
+            headerGlitch.style.fontVariationSettings = `"SICK" ${state.sick}, "DEGN" ${state.degn}`;
+            headerGlitch.classList.remove('glitch-level-1', 'glitch-level-2', 'glitch-level-3', 'active');
+            
+            if (state.mental >= 1 && state.mental <= 3) headerGlitch.classList.add('glitch-level-1', 'active');
+            else if (state.mental >= 4 && state.mental <= 6) headerGlitch.classList.add('glitch-level-2', 'active');
+            else if (state.mental >= 7) headerGlitch.classList.add('glitch-level-3', 'active');
 
-      <div class="input-group">
-        <label>Hábitos Nocivos (Tabaco)</label>
-        <div class="options-grid">
-            <label class="option-card"><input type="radio" name="smoke" value="0" checked><span class="card-content">No Fumo</span></label>
-            <label class="option-card"><input type="radio" name="smoke" value="50"><span class="card-content">Ocasional</span></label>
-            <label class="option-card"><input type="radio" name="smoke" value="100"><span class="card-content">Habitual</span></label>
-            <label class="option-card"><input type="radio" name="smoke" value="200"><span class="card-content">Intenso</span></label>
-        </div>
-      </div>
-    </div>
+            currentIndex = (currentIndex + 1) % demoStates.length;
+        }
+        setInterval(updateHeaderAnimation, 2000);
+        updateHeaderAnimation();
 
-    <div class="step" id="step3">
-      <div class="step-header">
-        <span class="step-counter">Fase 03 / 04</span>
-        <h2 class="step-title">Factores del Entorno</h2>
-        <p class="step-desc">El ambiente donde resides y tus oportunidades también afectan a tu salud .</p>
-      </div>
+        // --- NUEVA LÓGICA: Controles del Mapa de Caracteres ---
+        const sickRange = document.getElementById('sickRange');
+        const degnRange = document.getElementById('degnRange');
+        const sickValueDisplay = document.getElementById('sickValue');
+        const degnValueDisplay = document.getElementById('degnValue');
+        const glyphItems = document.querySelectorAll('.glyph-item');
 
-      <div class="input-group">
-        <label>Ciudad de Residencia</label>
-        <select id="citySelect" name="city">
-          <option value="">Selecciona...</option>
-          <option value="Madrid,ES">Madrid (ES)</option>
-          <option value="Barcelona,ES">Barcelona (ES)</option>
-          <option value="London,GB">Londres (UK)</option>
-          <option value="New York,US">New York (US)</option>
-          <option value="Tokyo,JP">Tokyo (JP)</option>
-          <option value="Beijing,CN">Beijing (CN)</option>
-          <option value="Mumbai,IN">Mumbai (IN)</option>
-          <option value="Oslo,NO">Oslo (NO)</option>
-        </select>
-        <small id="airQualityInfo" style="display:block; margin-top:5px; color:#3498db;"></small>
-      </div>
+        function updateGlyphs() {
+            const sick = sickRange.value;
+            const degn = degnRange.value;
+            
+            // Actualizar textos de valores
+            sickValueDisplay.textContent = parseFloat(sick).toFixed(2);
+            degnValueDisplay.textContent = degn;
 
-      <div class="input-group">
-        <label>Clima</label>
-        <div class="options-grid">
-            <label class="option-card"><input type="radio" name="temp" value="0" checked><span class="card-content">Agradable</span></label>
-            <label class="option-card"><input type="radio" name="temp" value="0.5"><span class="card-content">Extremo</span></label>
-        </div>
-      </div>
+            // Aplicar variación a todos los glifos
+            const settings = `"SICK" ${sick}, "DEGN" ${degn}`;
+            glyphItems.forEach(item => {
+                item.style.fontVariationSettings = settings;
+            });
+        }
 
-      <div class="input-group">
-        <label>Acceso a Agua</label>
-        <div class="options-grid">
-            <label class="option-card"><input type="radio" name="water" value="0" checked><span class="card-content">Potable</span></label>
-            <label class="option-card"><input type="radio" name="water" value="0.5"><span class="card-content">Escasa/Mala</span></label>
-        </div>
-      </div>
-    </div>
-
-    <div class="step" id="step4">
-      <div class="step-header">
-        <span class="step-counter">Fase 04 / 04</span>
-        <h2 class="step-title">Salud Mental</h2>
-        <p class="step-desc">La salud mental es igual de importante que la física y también genera un deterioro en tu bienestar.</p>
-      </div>
-
-      <div class="input-group">
-        <label>Nivel de Estrés Percibido</label>
-        <div class="options-grid">
-            <label class="option-card"><input type="radio" name="stress" value="0" checked><span class="card-content">Calma</span></label>
-            <label class="option-card"><input type="radio" name="stress" value="1"><span class="card-content">Leve</span></label>
-            <label class="option-card"><input type="radio" name="stress" value="2"><span class="card-content">Ansiedad</span></label>
-            <label class="option-card"><input type="radio" name="stress" value="3"><span class="card-content">Pánico</span></label>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>Presión Laboral</label>
-        <div class="options-grid">
-            <label class="option-card"><input type="radio" name="work" value="0" checked><span class="card-content">Baja</span></label>
-            <label class="option-card"><input type="radio" name="work" value="1"><span class="card-content">Media</span></label>
-            <label class="option-card"><input type="radio" name="work" value="2"><span class="card-content">Alta</span></label>
-            <label class="option-card"><input type="radio" name="work" value="3"><span class="card-content">Extrema</span></label>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="wizard-nav">
-    <button class="btn btn-prev" id="prevBtn" onclick="changeStep(-1)" disabled>Atrás</button>
-    <button class="btn btn-next" id="nextBtn" onclick="changeStep(1)">Continuar</button>
-  </div>
-</div>
-
-<div class="preview-area">
-  <div class="preview-card" id="previewCard">
-    <span class="glitch-wrapper" id="glitchText" data-text="TU NOMBRE">TU NOMBRE</span>
-  </div>
-</div>
-
-<script>
-/* --- LÓGICA DEL WIZARD (Pasos) --- */
-let currentStep = 1;
-const totalSteps = 4;
-
-function changeStep(direction) {
-    const newStep = currentStep + direction;
-    if(newStep < 1 || newStep > totalSteps) return;
-    document.getElementById(`step${currentStep}`).classList.remove('active');
-    currentStep = newStep;
-    document.getElementById(`step${currentStep}`).classList.add('active');
-    const progress = (currentStep / totalSteps) * 100;
-    document.getElementById('progressBar').style.width = `${progress}%`;
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    prevBtn.disabled = currentStep === 1;
-    prevBtn.style.opacity = currentStep === 1 ? '0.5' : '1';
-    if (currentStep === totalSteps) {
-        nextBtn.textContent = "Finalizar";
-        nextBtn.style.display = "none"; 
-    } else {
-        nextBtn.textContent = "Continuar";
-        nextBtn.style.display = "block";
-    }
-}
-
-/* --- LÓGICA DE TIPOGRAFÍA REACTIVA --- */
-const glitchText = document.getElementById("glitchText");
-const nameInput = document.getElementById("nameInput");
-const citySelect = document.getElementById("citySelect");
-const airQualityInfo = document.getElementById("airQualityInfo");
-
-let degn = 0, sick = 0, mental = 0;
-let airQualityValue = 0;
-
-nameInput.addEventListener("input", () => {
-  const newText = nameInput.value.toUpperCase() || "TU NOMBRE";
-  glitchText.textContent = newText;
-  glitchText.setAttribute('data-text', newText);
-});
-
-function getAirQualityForCity(cityName) {
-  const [city] = cityName.split(',');
-  const cityAirQuality = {
-    'Madrid': { aqi: 48, label: 'Buena', value: 0 },
-    'Barcelona': { aqi: 58, label: 'Moderada', value: 0.2 },
-    'New York': { aqi: 68, label: 'Moderada', value: 0.2 },
-    'Tokyo': { aqi: 58, label: 'Moderada', value: 0.2 },
-    'Beijing': { aqi: 168, label: 'Mala', value: 0.5 },
-    'Mumbai': { aqi: 195, label: 'Peligrosa', value: 0.8 },
-    'Oslo': { aqi: 35, label: 'Excelente', value: 0 }
-  };
-  return cityAirQuality[city] || { aqi: 75, label: 'Moderada', value: 0.2 };
-}
-
-citySelect.addEventListener('change', () => {
-  const cityValue = citySelect.value;
-  if (!cityValue) {
-    airQualityValue = 0;
-    airQualityInfo.style.display = 'none';
-    updateValues();
-    return;
-  }
-  const airQuality = getAirQualityForCity(cityValue);
-  airQualityValue = airQuality.value;
-  airQualityInfo.textContent = `Calidad aire: ${airQuality.label}`;
-  airQualityInfo.style.display = 'block';
-  updateValues();
-});
-
-function updateValues() {
-  const exercise = Number(document.querySelector('input[name="exercise"]:checked')?.value || 0);
-  const sleep = Number(document.querySelector('input[name="sleep"]:checked')?.value || 0);
-  const smoke = Number(document.querySelector('input[name="smoke"]:checked')?.value || 0);
-  // CAMBIO: Dieta a 0 para que empiece limpia
-  const diet = 0; 
-  degn = exercise + diet + sleep + smoke;
-  if (degn > 1000) degn = 1000;
-
-  const temp = parseFloat(document.querySelector('input[name="temp"]:checked')?.value || 0);
-  const water = parseFloat(document.querySelector('input[name="water"]:checked')?.value || 0);
-  sick = (airQualityValue + temp + water); 
-  if (sick > 1) sick = 1;
-
-  const stress = Number(document.querySelector('input[name="stress"]:checked')?.value || 0);
-  const work = Number(document.querySelector('input[name="work"]:checked')?.value || 0);
-  mental = (stress + work) * 1.5;
-
-  glitchText.style.fontVariationSettings = `"SICK" ${sick}, "DEGN" ${degn}`;
-  updateGlitch();
-}
-
-function updateGlitch() {
-  glitchText.classList.remove('glitch-level-1','glitch-level-2','glitch-level-3','active');
-  if (mental === 0) return;
-  else if (mental >= 1 && mental <= 3) glitchText.classList.add('glitch-level-1','active');
-  else if (mental >= 4 && mental <= 6) glitchText.classList.add('glitch-level-2','active');
-  else if (mental >= 7) glitchText.classList.add('glitch-level-3','active');
-}
-
-document.querySelectorAll('input, select').forEach(input => {
-    input.addEventListener('change', updateValues);
-});
-
-updateValues();
-</script>
-
+        // Event Listeners para los sliders
+        sickRange.addEventListener('input', updateGlyphs);
+        degnRange.addEventListener('input', updateGlyphs);
+    </script>
 </body>
 </html>
