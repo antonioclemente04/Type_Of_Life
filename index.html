@@ -140,9 +140,17 @@
             width: 100%;
             border-radius: 1rem;
             overflow: hidden;
-            background: #e2e8f0;
+            background: #000;
             aspect-ratio: 16/9;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         
         .video-placeholder {
@@ -302,7 +310,10 @@
 
         <div class="content-grid">
             <div class="video-container">
-                <div class="video-placeholder">Preview Video 1920x1080</div>
+                <video controls autoplay loop muted playsinline>
+                    <source src="Video_Type_Of_Life_Mejora.mp4" type="video/mp4">
+                    Tu navegador no soporta el elemento de video.
+                </video>
             </div>
             <div class="description-card">
                 <h2>Diseño Reactivo</h2>
